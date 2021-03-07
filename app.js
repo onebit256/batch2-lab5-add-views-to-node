@@ -3,8 +3,16 @@ const bodyparser = require('body-parser');
 // const mongoose = require('mongoose')
 const cors = require("cors")
 const bodyParser = require("body-parser")
-const router = require('./Routes/auth.route')
+const path = require("path");
+const router = require('./routes/auth.route')
+const dashboard_router = require("./routes/dashboard.route");
+
 var app = express()
+
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "public")));
 
 
 //Routes
@@ -18,9 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(bodyparser.json())
-app.get('/', function(req,res){
+app.get('/test', function(req,res){
   res.send('Hello world')
 })
+app.use('/',dashboard_router)
 app.use('/account/api',router)
 
 //MongoDb connection
