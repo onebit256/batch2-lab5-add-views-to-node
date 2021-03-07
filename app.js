@@ -5,6 +5,7 @@ const cors = require("cors")
 const bodyParser = require("body-parser")
 const path = require("path");
 const router = require('./routes/auth.route')
+const cookieParser = require("cookie-parser");
 const dashboard_router = require("./routes/dashboard.route");
 
 var app = express()
@@ -24,7 +25,7 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+app.use(cookieParser());
 app.use(bodyparser.json())
 app.get('/test', function(req,res){
   res.send('Hello world')

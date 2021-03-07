@@ -62,29 +62,22 @@ async function signup_form(req,res,next){
   }
 }
 
-// async function login_form(req,res,next){
-//   const username = req.body.email
-//   const password = req.body.password
+async function login_form(req,res,next){
+  const emailExist = await db.user.findOne({where:{email: req.body.email}})
+  if(!emailExist){
+    res.status(400).json({error:"Email not Found"})
+  }
+  const checkpassword = await bycrypt.compare(req.body.password, emailExist.password)
+  if(!checkpassword){
+    res.status(400).json({error:"Password mismatch"})
+  }
+  const token = jwt.sign({_id: emailExist.id},'anystring')
+  res.cookie('token', token)
+  // req.session.auth-token = jwt_token;
+  // res.redirect('/account/api/user');
+  res.redirect('/');
 
-//   const response = await fetch('http://127.0.0.1:8000/account/api/login', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded'
-//     },
-//     body: "email=dsf@gmail.com&password=123456789"
-//   })
-//   //...
-//   // Extract the JWT from the response
-//   const jwt_token =await  response.headers.get('auth-token')
-//   //...
-//   // Do something the token in the login method
-//   // await login({ jwt_token })
-//   res.cookie('token', jwt_token)
-//   // req.session.auth-token = jwt_token;
-//   // res.redirect('/account/api/user');
-//   res.redirect('/');
-//   //res.render("login")
-// }
+}
 
 
 
@@ -181,7 +174,7 @@ async function contracts(req,res,next){
     login,
     contracts,
     signup,
-    signup_form
-    // login_form,
+    signup_form,
+    login_form,
     // uploadFile
   }
