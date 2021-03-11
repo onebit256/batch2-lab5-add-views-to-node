@@ -6,6 +6,7 @@ const bodyParser = require("body-parser")
 const path = require("path");
 const router = require('./routes/auth.route')
 const cookieParser = require("cookie-parser");
+const multer = require("multer")
 const dashboard_router = require("./routes/dashboard.route");
 
 var app = express()

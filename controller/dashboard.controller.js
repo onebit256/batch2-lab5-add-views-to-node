@@ -2,7 +2,7 @@ const db = require('../dbconnectors/sqlite-connector')
 const bycrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken");
 // const fetch = require("node-fetch")
-// const multer = require("multer")
+const multer = require("multer")
 const path = require("path");
 // const IPFS = require('ipfs')
 
@@ -76,7 +76,6 @@ async function login_form(req,res,next){
   // req.session.auth-token = jwt_token;
   // res.redirect('/account/api/user');
   res.redirect('/');
-
 }
 
 
